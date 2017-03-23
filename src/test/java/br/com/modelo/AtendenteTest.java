@@ -19,25 +19,23 @@ public class AtendenteTest {
 
 	private EntityManager em;
 
-	
 	@Test
-	public void consultaMaiorId(){
-	
+	public void consultaMaiorId() {
+
 		gravaAtendente();
 		gravaAtendente();
 		gravaAtendente();
-			
+
 		Criteria criteria = createCriteria(Atendente.class, "a").setProjection(Projections.max("a.id"));
-		
+
 		Long maxId = (Long) criteria.setResultTransformer(Criteria.PROJECTION).uniqueResult();
-		
-		assertTrue("Verificar se é o maior Id", maxId >=3);
-		
-		
+
+		assertTrue("Verificar se é o maior Id", maxId >= 3);
+
 	}
-		
+
 	private Criteria createCriteria(Class<Atendente> class1, String string) {
-	
+
 		return null;
 	}
 
@@ -47,7 +45,7 @@ public class AtendenteTest {
 		gravaAtendente();
 		gravaAtendente();
 		gravaAtendente();
-		
+
 		StringBuilder jpql = new StringBuilder();
 		jpql.append(" SELECT COUNT (a.id) ");
 		jpql.append(" FROM Atendente a ");
@@ -58,7 +56,7 @@ public class AtendenteTest {
 
 		Long qtdAtend = (Long) query.getSingleResult();
 
-		assertEquals("quantidade de produtos deve ser igual a quantidade de lista de produtos", qtdAtend.intValue());
+		assertEquals("quantidade de atendentes", qtdAtend.intValue());
 
 	}
 

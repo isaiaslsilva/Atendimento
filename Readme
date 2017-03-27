@@ -1,0 +1,129 @@
+Qual a responsabilidade/objeto das anotações:
+
+@MappedSuperclass
+É a notação usada para mapear uma classe principal com propriedade em comum que será herdada pelas entidades.
+
+@Version
+Essa anotação usada na forma de controle ocorrência otimista ela gerencia se o objeto teve alguma atualização após a última consulta no banco caso tenha ocorrido alguma atualização, se houver alguma nova tentativa de atualização de forma paralela ele força uma nova consulta antes de outra atualização, e caso seja utilizada na forma de controle de ocorrência pessimista ele bloqueia o objeto para qualquer ação até que seja liberado pela primeira consulta.
+
+@Entity
+Essa anotação indica que essa classe terá notações com informações específicas para o banco de dados tornando os objetos que compõem a classe “persistivel” no banco de dados, ou seja, gravado no banco de dados.
+
+@Table
+Notação define detalhes da tabela do banco de dados que a entidade representa.
+
+@Id
+Usado para identificar qual atributo será a chave primária na entidade.
+
+@GeneratedValue
+Indica que queremos que a chave seja populada automaticamente pelo banco.
+
+@Column
+Essa notação oferece detalhes sobre a coluna que o atributo representa, como nome, se pode receber valores nulos ou a quantidade máxima de caracteres.
+
+@Basic
+Com essa anotação podemos sugerir a forma de carregamento como sendo completa ou parcial, onde algumas informações que não são utilizadas com muita frequência seja carregada apenas quando requisitado.
+
+@Temporal
+É utilizada para mapear atributos do tipo Data, hora ou DataHora.
+
+@ManyToOne
+Notação utilizada para mapeamento de relacionamentos muitos para um (N:1).
+
+@ManyToMany
+Notação utilizada para mapeamento de relacionamentos muitos para muitos (N:N).
+
+@OneToOne
+Notação utilizada para mapeamento de relacionamentos um para um (1:1).
+
+@JoinColumn
+Usada para especificar detalhes da chave estrangeira de um relacionamento.
+
+@JoinTable
+Notação utilizada para detalhar uma tabela intermediária do relacionamento de outras tabelas.
+
+isOpen
+Abre a instância do EntityManager.
+
+close
+Fecha a instância do EntityManager.
+
+createQuery
+Cria uma query no banco através de uma linguagem própria do JPA que é a JPQL.
+
+find
+Para uma busca mais simplificada pode-se usar o método find que faz uma busca dado algum critério.
+
+merge
+Método utilizado para atualizar um objeto que já possua um Id no banco de dados.
+
+persist
+Utilizado para persistir, ou seja, gravar um objeto no banco de dados
+
+remove
+Utilizado para remover um objeto no banco de dados.
+
+
+Como instanciar Criteria do Hibernate através do EntityManager?
+Dê exemplo do código
+
+Para instanciar Criteria é necessário utilizar-se da Session que é representada pelo EntityManager e funciona como uma fábrica de forma transparente para instanciar as transações.
+
+	private Session getSession() {
+		return (Session) em.getDelegate();
+	}
+	private Criteria createCriteria(Class<?> clazz) {
+		return getSession().createCriteria(clazz);
+
+
+Como abrir uma transação?
+Dê exemplo do código
+
+Temos que usar o metodo begin(); no EntityManager
+
+private EntityManager em;
+em.getTransaction().begin();
+
+
+
+Como fechar uma transação?
+Dê exemplo do código
+
+Temos que usar o método commit(); no EntityManager
+
+private EntityManager em;
+em.getTransaction().commit();
+
+
+Como criar e executar uma query com JPQL?
+Dê exemplo do código
+
+Temos que criar um objeto e usar o método .append para juntar as partes 
+
+	StringBuilder jpql = new StringBuilder();
+	jpql.append(" SELECT COUNT (s.id) ");
+	jpql.append(" FROM Segmento s ");
+	jpql.append(" WHERE s.tipo = :tipo ");
+
+
+Qual a responsabilidade dos valores FetchType.LAZY e FetchType.EAGER?
+
+FetchType.LAZY>> Sugere trazer somente o campo necessário para a consulta realizada.
+
+ FetchType.EAGER>> Traz todo o registro mesmo se a consulta utilizar apenas um campo.
+
+
+Qual a responsabilidade dos valores CascadeType.PERSIST e CascadeType.REMOVE?
+
+CascadeType.PERSIST >> Persiste no banco de dados os campos solicitados pela entidade e caso não exista dados do relacionamento na outra tabela persiste o relacionamento em cascata.
+
+CascadeType.REMOVE>> Caso remova um objeto do banco e em outra tabela o seu relacionamento não se vincular com mais nenhum outro objeto remove também o relacionamento da outra tabela.
+
+
+Como fazer uma operação BATCH (DELETE ou UPDATE) através do EntityManager?
+
+
+
+
+Qual a explicação para a exception LazyInitializationException?
+
